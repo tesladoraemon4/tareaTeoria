@@ -3,11 +3,14 @@ class Language extends HashMap<String,Integer> {
 
 	public String ranges[];
 	public int numChar=1;
-	Language(){}
+	Language(){
+		this.put("\u03BB",1);
+	}
 	/*
 		Contruct for init a conjunt of elements
 	*/
 	Language(String elements[]){
+		this.put("\u03BB",1);
 		this.addRanges(elements);
 	}
 	/*
@@ -16,6 +19,7 @@ class Language extends HashMap<String,Integer> {
 		element = a-o|1-2
 	*/
 	Language(String rangeStr){
+		this.put("\u03BB",1);
 		this.addRanges(rangeStr.split(","));
 	}
 	//add ranges of values 
@@ -42,13 +46,16 @@ class Language extends HashMap<String,Integer> {
 	/*
 		get te product cartesian
 	*/
-	public Language cartesianProduct(Language lx){
+	public Language cartesianProduct(Language ly,Language lx){
 		Language result = new Language();
-		this.forEach((k1,v1) -> {
+		lx.remove("\u03BB");
+		ly.remove("\u03BB");
+		ly.forEach((k1,v1) -> {
 			lx.forEach((k2,v2) -> {
 				result.put(k1+k2,1);
 			});
 		});
+		result.put("\u03BB",1);
 		return result;
 	}
 	/*
@@ -58,10 +65,20 @@ class Language extends HashMap<String,Integer> {
 		int tam = cad.length();
 		for (int x =0;x < tam;x++) 
 			if(this.get(""+cad.charAt(x))!=null)
-				return false;
-		return true;
+				return true;
+		return false;
 	}
 
+	/*
+		Pow for the languaje
+	*/
+	public Language powLanguaje(int n){
+		Language res = new Language();
+		res = this;
+		for(int x =0 ;x<n-1;x++)
+			res = this.cartesianProduct(this,res);
+		return res;
+	}
 	
 
 

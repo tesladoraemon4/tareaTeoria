@@ -8,19 +8,15 @@
 #include <stdbool.h>
 
 int main(){
-	int a,d;
-	scanf("%d",&a);
-	scanf("%d",&d);
-	for (int q = 0; q <= a; ++q)
+	char *a=(char *)malloc(100*sizeof(char));
+	scanf("%s",a);
+	int x=0;
+	for (;*a!='\0';a++)
 	{
-		for (int r = 0; r < d; ++r){
-			if(a==q*d+r){
-				printf("%d\n", q);
-				printf("%d\n", r);
-			}
+		if('0'==*a){
+			x++;
 		}
-		
 	}
-
+	printf("%d\n", x);
 	return 0;
 }
